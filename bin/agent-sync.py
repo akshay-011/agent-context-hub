@@ -111,7 +111,9 @@ def sync_global(context_dir: Path, dry_run=False):
 
     targets = [
         (Path.home() / ".claude" / "CLAUDE.md", "Claude Code Global"),
-        (Path.home() / ".gemini" / "config" / "instructions.md", "AGY / Antigravity Global"),
+        (Path.home() / ".gemini" / "config" / "instructions.md", "AGY / Antigravity Instructions"),
+        (Path.home() / ".gemini" / "config" / "GEMINI.md", "AGY / Antigravity Global Rules"),
+        (Path.home() / ".gemini" / "GEMINI.md", "AGY / Antigravity Home Rules"),
         (Path.home() / ".codex" / "instructions.md", "Codex / OpenCode Global"),
     ]
 
@@ -163,15 +165,16 @@ def sync_workspace(context_dir: Path, workspace_path: Path, dry_run=False):
     else:
         print(f"  [DRY-RUN] Would write {agents_file}")
 
-    # 2. Link or create CLAUDE.md for Claude Code
-    claude_file = repo / "CLAUDE.md"
-    if not claude_file.exists() and not dry_run:
-        try:
-            claude_file.symlink_to("AGENTS.md")
-            print(f"  ✓ Claude Code Symlink     -> {claude_file} -> AGENTS.md")
-        except Exception:
-            claude_file.write_text(agents_text, encoding='utf-8')
-            print(f"  ✓ Claude Code Direct File -> {claude_file}")
+    # 2. Link or create CLAUDE.md and GEMINI.md
+    for link_name in ["CLAUDE.md", "GEMINI.md"]:
+        link_file = repo / link_name
+        if not link_file.exists() and not dry_run:
+            try:
+                link_file.symlink_to("AGENTS.md")
+                print(f"  ✓ Symlink ({link_name:<10}) -> AGENTS.md")
+            except Exception:
+                link_file.write_text(agents_text, encoding='utf-8')
+                print(f"  ✓ Direct File ({link_name:<10}) -> {link_file}")
 
     # 3. Generate Cursor .cursor/rules/*.mdc with globs
     stacks_dir = context_dir / "stacks"
