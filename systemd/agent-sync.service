@@ -1,0 +1,9 @@
+[Unit]
+Description=Universal AI Agent Context Sync
+After=default.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/agent-sync
+StandardOutput=journal
+StandardError=journal
