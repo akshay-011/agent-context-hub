@@ -2,8 +2,11 @@
 Description=Watch Context Directory for AI Agent Sync
 
 [Path]
-PathModified=%h/workspace/agent-context-hub/context
-PathModified=%h/Vault/Context
+PathChanged=%h/workspace/agent-context-hub/context
+PathChanged=%h/workspace/agent-context-hub/context/global
+PathChanged=%h/workspace/agent-context-hub/context/stacks
+PathChanged=%h/workspace/agent-context-hub/context/adrs
+PathChanged=%h/Vault/Context
 Unit=agent-sync.service
 
 [Install]
