@@ -7,9 +7,10 @@
 
 ## Overview
 
-When using multiple AI coding agents, you constantly have to re-explain who you are, your seniority, your preferred tools, and negative constraints ("never use `any`", "vitest over jest", "terse replies"). 
+When using multiple AI coding agents, you constantly have to re-explain who you are, your seniority, your preferred tools, and negative constraints ("never use `any`", "vitest over jest", "terse replies").
 
 `agent-context-hub` solves this by establishing a **Pragmatic Hybrid Architecture**:
+
 1. **Author in Obsidian:** Maintain your developer identity, rules, and technology playbooks as standard Markdown notes in an Obsidian vault (`context/`).
 2. **Ahead-of-Time (AOT) Sync:** The `agent-sync` CLI compiles these notes into lightweight, tool-native formats (`~/.claude/CLAUDE.md`, `~/.gemini/config/instructions.md`, `.cursor/rules/*.mdc`, and `AGENTS.md`).
 3. **Background Daemon:** A Linux `systemd` user watcher automatically triggers sync on boot and every time you save a note in Obsidian.
@@ -19,7 +20,7 @@ When using multiple AI coding agents, you constantly have to re-explain who you 
 flowchart LR
     Obsidian["Obsidian Notes<br><code>context/</code>"] --> Watcher["systemd watcher<br><i>(Runs on boot & save)</i>"]
     Watcher --> Sync["agent-sync CLI"]
-    
+
     Sync --> Claude["Claude Code<br><code>~/.claude/CLAUDE.md</code>"]
     Sync --> AGY["AGY / Antigravity<br><code>~/.gemini/config/instructions.md</code>"]
     Sync --> Cursor["Cursor Rules<br><code>.cursor/rules/*.mdc</code>"]
@@ -64,6 +65,7 @@ cd ~/workspace/agent-context-hub
 ```
 
 What `install.sh` does:
+
 1. Installs `agent-sync` CLI into `~/.local/bin/agent-sync`.
 2. Creates an Obsidian convenience link at `~/Vault/Context -> ~/workspace/agent-context-hub/context`.
 3. Installs and enables the `systemd` user watcher (`agent-sync.path`).
@@ -78,10 +80,10 @@ The `context/` directory in this repository **is** your Obsidian vault. You don'
 
 1. **Launch Obsidian** (from your application launcher or by running `obsidian` in terminal).
 2. The vault opens automatically with your context files in the sidebar:
-   * **`global/identity.md`**: Your bio, seniority, engineering philosophy, and communication tone.
-   * **`global/guardrails.md`**: Strict "never-do" negative constraints and security invariants.
-   * **`stacks/`**: Technology-specific rules (TypeScript, Python, Linux) that trigger conditionally based on file extensions.
-   * **`adrs/`**: Deep architecture notes and decisions accessible on-demand via MCP.
+   - **`global/identity.md`**: Your bio, seniority, engineering philosophy, and communication tone.
+   - **`global/guardrails.md`**: Strict "never-do" negative constraints and security invariants.
+   - **`stacks/`**: Technology-specific rules (TypeScript, Python, Linux) that trigger conditionally based on file extensions.
+   - **`adrs/`**: Deep architecture notes and decisions accessible on-demand via MCP.
 3. **Edit in plain English and save (`Ctrl+S`).**
 4. The background `systemd` watcher immediately compiles and propagates changes to AGY, Claude Code, Cursor, and OpenCode in milliseconds.
 
@@ -90,11 +92,15 @@ The `context/` directory in this repository **is** your Obsidian vault. You don'
 ## Daily Usage
 
 ### 2. Checking Health & Token Budget
+
 Run:
+
 ```bash
 agent-sync --status
 ```
+
 Example output:
+
 ```
 ============================================================
  AGENT CONTEXT HUB: STATUS & HEALTH CHECK
@@ -119,6 +125,7 @@ Daemon / Watcher Status:
 ```
 
 ### 3. Setting Up a Workspace / Project
+
 To generate project-specific rules (`AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/*.mdc`) inside a repository:
 
 ```bash
@@ -126,25 +133,3 @@ agent-sync --workspace ~/workspace/my-project
 ```
 
 ---
-
-## Pushing to GitHub
-
-To store and sync this repository with your GitHub account:
-
-```bash
-cd ~/workspace/agent-context-hub
-
-# Create a new repository on GitHub (using GitHub CLI)
-gh repo create agent-context-hub --public --source=. --remote=origin --push
-
-# Or push to an existing remote:
-# git remote add origin git@github.com:<your-username>/agent-context-hub.git
-# git branch -M master
-# git push -u origin master
-```
-
----
-
-## License
-
-MIT License
