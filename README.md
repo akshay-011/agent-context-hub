@@ -72,14 +72,22 @@ What `install.sh` does:
 
 ---
 
+## How It Works with Obsidian (Zero-Configuration Setup)
+
+The `context/` directory in this repository **is** your Obsidian vault. You don't have to navigate folders or configure paths manually:
+
+1. **Launch Obsidian** (from your application launcher or by running `obsidian` in terminal).
+2. The vault opens automatically with your context files in the sidebar:
+   * **`global/identity.md`**: Your bio, seniority, engineering philosophy, and communication tone.
+   * **`global/guardrails.md`**: Strict "never-do" negative constraints and security invariants.
+   * **`stacks/`**: Technology-specific rules (TypeScript, Python, Linux) that trigger conditionally based on file extensions.
+   * **`adrs/`**: Deep architecture notes and decisions accessible on-demand via MCP.
+3. **Edit in plain English and save (`Ctrl+S`).**
+4. The background `systemd` watcher immediately compiles and propagates changes to AGY, Claude Code, Cursor, and OpenCode in milliseconds.
+
+---
+
 ## Daily Usage
-
-### 1. Authoring in Obsidian
-Open Obsidian and either:
-* Open `~/workspace/agent-context-hub/context` as a vault, OR
-* Open your existing vault and link `~/Vault/Context`.
-
-Whenever you save an edit to `identity.md` or any stack file, the systemd watcher immediately regenerates the target configurations in the background.
 
 ### 2. Checking Health & Token Budget
 Run:
