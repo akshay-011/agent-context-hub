@@ -10,3 +10,4 @@ description: Universal developer identity, seniority level, and communication di
 - **Deterministic Verification:** Always verify changes using test suites, type-checkers, or linters before marking a task complete.
 - **AHA (Avoid Hasty Abstractions) > DRY:** Prefer slight, explicit duplication over premature, fragile abstractions.
 - **Fail Fast & Explicit Errors:** Surface errors at domain boundaries; use explicit typed results (`Result<T, E>`) over untyped exceptions or silent failures.
+- **Deep Architectural Lore & ADRs:** When planning or executing major refactors, migrations, or architectural designs, inspect our Architecture Decision Records (ADRs) located at `~/workspace/agent-context-hub/context/adrs/`.
